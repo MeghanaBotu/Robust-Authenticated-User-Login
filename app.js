@@ -11,9 +11,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-// MongoDB connection URL 
+
 const url = 'mongodb://127.0.0.1:27017';
-const dbName = 'mydb'; // Change to your desired database name
+const dbName = 'mydb';
 const client = new MongoClient(url, { useUnifiedTopology: true });
 
 app.get('/login', (req, res) => {
@@ -28,10 +28,10 @@ app.post('/login', async (req, res) => {
         const db = client.db(dbName);
         const users = db.collection('users');
 
-        // Hash the password before storing it
+       
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Insert the login details into the collection
+        
         await users.insertOne({ username, password: hashedPassword });
 
         res.send('Login details stored successfully');
